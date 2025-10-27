@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "eee3a4d3-1d97-47cd-9cb7-23f97360649e",
+		"name": "MOVIE_MEI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49265401",
+		"_collection_link": "https://meilisaapriyani-8795584.postman.co/workspace/Mei's-Workspace~2d7b56a0-c398-4c66-8df9-c917bfba5766/collection/49265401-eee3a4d3-1d97-47cd-9cb7-23f97360649e?action=share&source=collection_link&creator=49265401"
+	},
+	"item": [
+		{
+			"name": "List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"judul\" : \"Meilisa the Duyung\",\r\n    \"tahunRilis\" : \"2026\",\r\n    \"sutradara\" : \"Mei\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/list\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"list\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
