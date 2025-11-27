@@ -23,7 +23,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"judul\" : \"Meilisa the Duyung\",\r\n    \"tahunRilis\" : \"2026\",\r\n    \"sutradara\" : \"Mei\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,7 +31,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/list\n",
+					"raw": "http://localhost:3000/api/movie",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -39,7 +39,7 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"list\n"
+						"movie"
 					]
 				}
 			},
@@ -48,24 +48,127 @@
 		{
 			"name": "Update",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"judul\" : \"Hello Kitty the Superman Zuper\",\r\n    \"tahunRilis\" : \"2029\",\r\n    \"sutradara\" : \"Meis\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/movie/68fedc983644a490f8fc4d93",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movie",
+						"68fedc983644a490f8fc4d93"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Delete",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Aplication/json",
+						"type": "text"
+					}
+				]
 			},
 			"response": []
 		},
 		{
 			"name": "Create",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"judul\" : \"The Man in the Pinkhole\",\r\n    \"tahunRilis\" : 2029,\r\n    \"sutradara\" : \"Maman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/movie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SIGN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"meilisa@gmail.com\",\r\n    \"password\" : \"akucantiks\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/signIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"signIn"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
 			},
 			"response": []
 		}

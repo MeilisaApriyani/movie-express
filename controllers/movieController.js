@@ -1,111 +1,142 @@
-import movieModel from "../models/movieModels.js";
+import { response } from "express";
+import movieModels from "../models/movieModels.js";
 
-export const listMovie = async (req, res) => {
+export const listMovie = async (req, res)=>{
     try {
-        const data = await movieModel.find({})
-
-        res.status(200).json({
-            message: "Berhasil mendapatkan data movie",
-            data: data
-        })
-
-        } catch (error) {
-            res.status(500).json({
-                message: error.message,
-                data: null
-        })
+        const movies = await movieModels.find({
+            createdBy : req.user?.user_id
+        }).sort({createdAt : -1});
+            
+        return res.status (200).json({
+            message : "List semua movie",
+            data : movies,
+        });
+        
+    }catch(error){
+        return res.status(500).json({
+            message : "Error",
+            error : error.message,
+            data : null,
+        });
     }
-}
+};
 
-export const createNewMovie = async (req, res) => {
+export const createMovie = async (req, res)=>{
     try {
-        const request = req.body
-        console.log(request)
-        
-        const response = await movieModel.create({
-            judul : request.judul,
-            tahunRilis : request.tahunRilis,
-            sutradara : request.sutradara
-        })
-        
+        const {judul, tahunRilis, sutradara } = req.body;
+
+        if(!judul || !tahunRilis || !sutradara){
+            return res.status(400).json ({
+                message : "Semua data wajib diisi",
+                data : null
+            });
+        }
+        const movie = await movieModels.create({judul, tahunRilis, sutradara, createdBy : req.user?.user_id});
         res.status(201).json({
-            message : "Movie berhasil ditambahkan",
-            data : response
+            message: "Movie berhasil ditambahkan",
+            data: movie
         })
-    } catch (error) {
+    }catch (error) {
         res.status(500).json({
-            message : error,
-            data : null
+            message: error.message,
+            data: null
+
         })
     }
 }
-
-
 export const updateMovie = async (req, res) => {
     try {
-        const id = req.params.id
+        const id = req.params?.id
         const request = req.body
-
         if (!id) {
-            return res.status(500).json({
-                message: "Data ID anda salah",
+            return res.status(400).json({
+                message: "Id movie wajib di isi",
                 data: null
             })
         }
-
-        const response = await movieModel.findByIdAndUpdate(id, {
-            judul: request.judul,
-            tahunRilis: request.tahunRilis,
-            sutradara: request.sutradara
-        })
+        const updateMovie = await movieModels.findByIdAndUpdate({
+            _id : id,
+            createdBy : req.user?.user_id
+        },{judul , tahunRilis, sutradara},{new: true}
+        );
 
         if (!response) {
-            return res.status(404).json ({
-                message: "Movie gagal diupdate",
-                data: null
+            return res.status(500).json({
+                message: "Movie gagal di update",
+                data: response
             })
         }
-
         return res.status(200).json({
-            message: "Movie berhasil diupdate",
-            data: null
+            message: "Movie berhasil di update",
+            data: response
         })
-
     } catch (error) {
         res.status(500).json({
             message: error.message,
-            data: null
+            data: response
+        })
+    }
+
+}
+export const detailMovie = async (req, res) => {
+    try {
+        const id = req.params?.id;
+
+        if (!id) {
+            return res.status(400).json({
+                message: "Id movie wajib di isi",
+                data: null,
+            })
+        }
+        const movie = await movieModels.findById({
+            _id : id,
+            createdBy: req.user?.user_id
+        });
+        if (!movie) {
+            return res.status(404).json({
+                message: "Movie tidak ditemukan",
+                data: null,
+            })
+        }
+        return res.status(200).json({
+            message: "Detail Movie",
+            data: movie,
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Terjadi kesalahan pada server",
+            error: error.message,
+            data: null,
         })
     }
 }
-
-export const deleteMovie = async (req, res) => {
-    try {
+export const deleteMovie = async (req, res)=>{
+    try{
         const id = req.params.id
 
-        if (!id) {
-            return res.status(500).json({
-                message: "Data ID anda salah",
+        if(!id){
+            return res.status (400).json({
+                message : "ID movie wajib di isi",
+                data : null,
             })
         }
-
-        const response = await movieModel.findByIdAndDelete(id)
-
-        if (!response) {
-            return res.status(404).json ({
-                message: "Data Movie gagal dihapus",
+        const movie = await movieModels.findByIdAndDelete({
+            _id : id,
+            createdBy : req.user?.user_id
+        });
+        if (movie) {
+            return res.status(200).json({
+                message: "Movie berhasil dihapus",
                 data: null
             })
         }
-
-        return res.status(200).json({
-            message: "Data Movie berhasil dihapus",
+        return res.status(404).json({
+            message: "Movie tidak ditemukan",
             data: null
         })
-        
-    } catch (error) {
+    }catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: error,
             data: null
         })
     }

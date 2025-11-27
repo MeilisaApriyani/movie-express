@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import UserModels from "./userModels.js";
 
 const MovieSchema = new mongoose.Schema(
     {
@@ -18,12 +19,16 @@ const MovieSchema = new mongoose.Schema(
             required : true,
             trim : true,
         },
+        createdBy: {
+            type: mongoose.Types.ObjectId,
+            ref: UserModels
+        }  
     },
     {
         timestamps: true,
     }
 );
 
-const movieModel = mongoose.model("movies", MovieSchema);
+const movieModels = mongoose.model("movies", MovieSchema);
 
-export default movieModel;
+export default movieModels;
