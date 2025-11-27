@@ -46,38 +46,34 @@ export const createMovie = async (req, res)=>{
 }
 export const updateMovie = async (req, res) => {
     try {
-        const id = req.params?.id
-        const request = req.body
-        if (!id) {
-            return res.status(400).json({
-                message: "Id movie wajib di isi",
-                data: null
-            })
-        }
-        const updateMovie = await movieModels.findByIdAndUpdate({
-            _id : id,
-            createdBy : req.user?.user_id
-        },{judul , tahunRilis, sutradara},{new: true}
+        const id = req.params.id;
+        const { judul, tahunRilis, sutradara } = req.body;
+
+        const movie = await movieModels.findOneAndUpdate(
+            { _id: id, createdBy: req.user?.user_id },
+            { judul, tahunRilis, sutradara },
+            { new: true }
         );
 
-        if (!response) {
-            return res.status(500).json({
-                message: "Movie gagal di update",
-                data: response
-            })
+        if (!movie) {
+            return res.status(404).json({
+                message: "Informasi data movie gagal diupdate",
+                data: null,
+            });
         }
-        return res.status(200).json({
-            message: "Movie berhasil di update",
-            data: response
-        })
+
+        res.status(200).json({
+            message: "Informasi data movie berhasil diupdate",
+            data: movie,
+        });
     } catch (error) {
         res.status(500).json({
             message: error.message,
-            data: response
-        })
+            data: null,
+        });
     }
+};
 
-}
 export const detailMovie = async (req, res) => {
     try {
         const id = req.params?.id;
